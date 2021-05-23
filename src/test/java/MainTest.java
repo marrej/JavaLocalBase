@@ -5,15 +5,15 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class MainTest {
 
-    private Main main;
+    private CodeWorker codeWorker;
 
     @BeforeEach
     public void setUp() throws Exception{
-        main = new Main();
+        codeWorker = new CodeWorker();
     }
 
     @Test
     void testMethod() {
-        assertEquals(main.testMethod(), "method");
+        assertEquals(codeWorker.testMethod(), "method");
     }
 }
