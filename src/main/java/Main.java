@@ -43,4 +43,49 @@ class CodeWorker {
     public String testMethod() {
         return "method";
     }
+
+    public String travel(String adresses, String zip) {
+        return "";
+    }
+
+    public Address breakAdress(String address) {
+        String city = "";
+        String street = "";
+        String zip = "";
+
+        String[] split = address.split(" ");
+        city = split[0];
+        zip = split[split.length - 2] + " " + split[split.length - 1];
+        for (var i = 1; i < split.length -2; i++) {
+            if (i > 1) {
+                street += " ";
+            }
+            street += split[i];
+        }
+        return new Address(zip, street, city);
+    }
+}
+
+class Address {
+    String zip;
+    String street;
+    String city;
+
+    public Address(String zip, String street, String city) {
+        this.zip = zip;
+        this.street = street;
+        this.city = city;
+    }
+
+    public String getZip() {
+        return zip;
+    }
+
+    public String getStreet() {
+        return street;
+    }
+
+    public String getCity() {
+        return city;
+    }
 }
