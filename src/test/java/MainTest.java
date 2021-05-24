@@ -1,6 +1,9 @@
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class MainTest {
@@ -37,5 +40,16 @@ class MainTest {
         assertEquals(address.getZip(), "OH 43071");
         assertEquals(address.getCity(), "123");
         assertEquals(address.getStreet(), "Main Street St. Louisville");
+    }
+
+    @Test
+    void mergeAdresses() {
+        Address add1 = new Address("OH 43071",  "Main Street St. Louisville", "123");
+        Address add2 = new Address("OH 43071", "Main Street2 St. Louisville", "124");
+        List<Address> l = new ArrayList<>();
+        l.add(add1);
+        l.add(add2);
+        String mergedAddress = "OH 43071:Main Street St. Louisville,Main Street2 St. Louisville/123,124";
+        assertEquals(mergedAddress, codeWorker.mergeAddresses(l));
     }
 }

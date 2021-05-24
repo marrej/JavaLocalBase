@@ -2,6 +2,7 @@
  Simple local base for java problems
 
 Actual problem ->
+https://www.codewars.com/kata/56af1a20509ce5b9b000001e/train/java
 https://www.codewars.com/kata/56af1a20509ce5b9b000001e
 
 A traveling salesman has to visit clients. He got each client's address e.g. "432 Main Long Road St. Louisville OH 43071" as a list.
