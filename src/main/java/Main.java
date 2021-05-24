@@ -2,6 +2,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Main {
@@ -46,8 +47,30 @@ class CodeWorker {
     }
 
     public String travel(String adresses, String zip) {
+        List<String> addressList = this.filterRequiredAddresses(adresses, zip);
 
-        return "";
+        return this.getAddressString(addressList, zip);
+    }
+
+    public String getAddressString(List<String> addresses, String zip) {
+        List<Address> addList = new ArrayList<>();
+        for (var add: addresses) {
+            addList.add(this.breakAdress(add));
+        }
+
+        return zip+":"+this.mergeAddresses(addList);
+    }
+
+    public List<String> filterRequiredAddresses(String addresses, String zip) {
+        List<String> addressList = new ArrayList<>();
+        var split = addresses.split(",");
+        for (var add : split) {
+            if (add.contains(zip)) {
+                addressList.add(add);
+            }
+        }
+
+        return addressList;
     }
 
     public Address breakAdress(String address) {
@@ -68,11 +91,9 @@ class CodeWorker {
     }
 
     public String mergeAddresses(List<Address> addresses) {
-        var zip = "";
         var street = "";
         var city = "";
         for (var address : addresses) {
-            zip = address.getZip();
             if (street != "") {
                 street += ",";
             }
@@ -82,7 +103,7 @@ class CodeWorker {
             }
             city += address.getCity();
         }
-        return zip+":"+street+"/"+city;
+        return street+"/"+city;
     }
 }
 
