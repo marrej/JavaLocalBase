@@ -47,26 +47,20 @@ class CodeWorker {
     }
 
     public String travel(String adresses, String zip) {
-        List<String> addressList = this.filterRequiredAddresses(adresses, zip);
-
-        return this.getAddressString(addressList, zip);
+        return this.getAddressString(this.filterRequiredAddresses(adresses, zip), zip);
     }
 
-    public String getAddressString(List<String> addresses, String zip) {
-        List<Address> addList = new ArrayList<>();
-        for (var add: addresses) {
-            addList.add(this.breakAdress(add));
-        }
-
-        return zip+":"+this.mergeAddresses(addList);
+    public String getAddressString(List<Address> addresses, String zip) {
+        return zip+":"+this.mergeAddresses(addresses);
     }
 
-    public List<String> filterRequiredAddresses(String addresses, String zip) {
-        List<String> addressList = new ArrayList<>();
+    public List<Address> filterRequiredAddresses(String addresses, String zip) {
+        List<Address> addressList = new ArrayList<>();
         var split = addresses.split(",");
         for (var add : split) {
-            if (add.contains(zip)) {
-                addressList.add(add);
+            Address newAddress = this.breakAdress(add);
+            if (newAddress.getZip().equals(zip)) {
+                addressList.add(newAddress);
             }
         }
 
