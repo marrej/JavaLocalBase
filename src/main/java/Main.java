@@ -1,14 +1,10 @@
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Main {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         CodeWorker code = new CodeWorker();
-        code.fileInputReadStream();
         System.out.println(code.testMethod());
     }
 
@@ -16,32 +12,6 @@ public class Main {
 }
 
 class CodeWorker {
-    public void fileInputReadStream() throws IOException {
-        FileInputStream in = null;
-        FileOutputStream out = null;
-
-        try {
-            in = new FileInputStream("src/input.txt");
-            out = new FileOutputStream("output.txt");
-
-            int c;
-            while ((c = in.read()) != -1) {
-                out.write(c);
-            }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            if (in != null) {
-                in.close();
-            }
-            if (out != null) {
-                out.close();
-            }
-        }
-    }
-
     public String testMethod() {
         return "method";
     }
@@ -122,5 +92,18 @@ class Address {
 
     public String getCity() {
         return city;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Address address = (Address) o;
+        return Objects.equals(zip, address.zip) && Objects.equals(street, address.street) && Objects.equals(city, address.city);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(zip, street, city);
     }
 }
