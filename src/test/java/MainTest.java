@@ -58,6 +58,163 @@ class MainTest {
     }
 
     @Test
+    void reduce2ColorsDone() {
+        List<List<Integer>> boxes = new ArrayList<>(
+                Arrays.asList(
+                        new ArrayList<>(
+                                Arrays.asList(
+                                        1,1
+                                )
+                        ),
+                        new ArrayList<>(
+                                Arrays.asList(
+                                        1,1
+                                )
+                        )
+                )
+        );
+
+        List<List<Integer>> expected = new ArrayList<>(
+                Arrays.asList(
+                        new ArrayList<>(
+                                Arrays.asList(
+                                        0,2
+                                )
+                        ),
+                        new ArrayList<>(
+                                Arrays.asList(
+                                        2,0
+                                )
+                        )
+                )
+        );
+        assertEquals(expected, codeWorker.reduceBoxes(boxes));
+    }
+
+    @Test
+    void reduce2ColorsNone() {
+        List<List<Integer>> boxes = new ArrayList<>(
+                Arrays.asList(
+                        new ArrayList<>(
+                                Arrays.asList(
+                                        0,2
+                                )
+                        ),
+                        new ArrayList<>(
+                                Arrays.asList(
+                                        1,1
+                                )
+                        )
+                )
+        );
+
+        List<List<Integer>> expected = new ArrayList<>(
+                Arrays.asList(
+                        new ArrayList<>(
+                                Arrays.asList(
+                                        0,2
+                                )
+                        ),
+                        new ArrayList<>(
+                                Arrays.asList(
+                                        1,1
+                                )
+                        )
+                )
+        );
+        assertEquals(expected, codeWorker.reduceBoxes(boxes));
+    }
+
+
+    @Test
+    void reduce3ColorsNone() {
+        List<List<Integer>> boxes = new ArrayList<>(
+                Arrays.asList(
+                        new ArrayList<>(
+                                Arrays.asList(
+                                        1,3,1
+                                )
+                        ),
+                        new ArrayList<>(
+                                Arrays.asList(
+                                        2,1,2
+                                )
+                        ),
+                        new ArrayList<>(
+                                Arrays.asList(
+                                        3,3,3
+                                )
+                        )
+                )
+        );
+
+        List<List<Integer>> expected = new ArrayList<>(
+                Arrays.asList(
+                        new ArrayList<>(
+                                Arrays.asList(
+                                        0,0,5
+                                )
+                        ),
+                        new ArrayList<>(
+                                Arrays.asList(
+                                        0,5,0
+                                )
+                        ),
+                        new ArrayList<>(
+                                Arrays.asList(
+                                        6,2,1
+                                )
+                        )
+                )
+        );
+        assertEquals(expected, codeWorker.reduceBoxes(boxes));
+    }
+
+    @Test
+    void reduce3ColorsDone() {
+        List<List<Integer>> boxes = new ArrayList<>(
+                Arrays.asList(
+                        new ArrayList<>(
+                                Arrays.asList(
+                                        0,2,1
+                                )
+                        ),
+                        new ArrayList<>(
+                                Arrays.asList(
+                                        1,1,1
+                                )
+                        ),
+                        new ArrayList<>(
+                                Arrays.asList(
+                                        2,0,0
+                                )
+                        )
+                )
+        );
+
+        List<List<Integer>> expected = new ArrayList<>(
+                Arrays.asList(
+                        new ArrayList<>(
+                                Arrays.asList(
+                                        0,3,0
+                                )
+                        ),
+                        new ArrayList<>(
+                                Arrays.asList(
+                                        3,0,0
+                                )
+                        ),
+                        new ArrayList<>(
+                                Arrays.asList(
+                                        0,0,2
+                                )
+                        )
+                )
+        );
+        assertEquals(expected, codeWorker.reduceBoxes(boxes));
+    }
+
+    @Test
     void swapColorsWhenSwapperIsBigger() {
         var swap = codeWorker.swapColors(
                 1,

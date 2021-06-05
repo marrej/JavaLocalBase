@@ -17,6 +17,13 @@ class CodeWorker {
         var possible = "Possible";
         var impossible = "Impossible";
 
+        var reducedBoxes = this.reduceBoxes(boxes);
+        // check if they are really all zeroed out
+
+        return possible;
+    }
+
+    public List<List<Integer>> reduceBoxes(List<List<Integer>> boxes) {
         var colorAmount = boxes.size();
 
         for (var i = 0; i < colorAmount ;i++) {
@@ -29,24 +36,31 @@ class CodeWorker {
                 var isNotYetCleanColor = color != 0;
                 if (isNotYetCleanColor) {
                     for (var q = checkedBox + 1; q < colorAmount; q++) {
-                        if (this.isSwapPossible(checkedColor, box, boxes.get(q))) {
-                            // do swap
+                        var nextBox = boxes.get(q);
+                        if (this.isSwapPossible(checkedColor, box, nextBox)) {
+                            var swapped = this.getColorsToSwapAndProceed(checkedColor, box, nextBox);
+                            boxes.set(checkedBox, swapped.get(0));
+                            boxes.set(q, swapped.get(1));
                         }
                     }
                 }
             }
         }
 
-        return possible;
+        return boxes;
     }
 
     public boolean isSwapPossible(Integer color, List<Integer> box1, List<Integer> box2) {
         var colorAmount = box1.get(color);
         var initialClear = this.getClearColors(box1, box2);
-        var swapableColors = this.getSwappableColors(color, box1, box2);
-        var swappedBoxes = this.swapColors(color, box1, box2, swapableColors);
-        var afterUpdateClear = this.getClearColors(box1, box2);
+        var swappedBoxes = this.getColorsToSwapAndProceed(color, box1, box2);
+        var afterUpdateClear = this.getClearColors(swappedBoxes.get(0), swappedBoxes.get(1));
         return afterUpdateClear > initialClear;
+    }
+
+    public List<List<Integer>> getColorsToSwapAndProceed(Integer color, List<Integer> box1, List<Integer> box2) {
+        var swapableColors = this.getSwappableColors(color, box1, box2);
+        return this.swapColors(color, box1, box2, swapableColors);
     }
 
     public List<List<Integer>> swapColors(Integer color, List<Integer> box1, List<Integer> box2, List<List<Integer>> swappable) {
