@@ -131,6 +131,51 @@ class MainTest {
     }
 
     @Test
+    void swapIsPossible() {
+        var swap = codeWorker.isSwapPossible(
+                1,
+                new ArrayList<>(
+                        Arrays.asList(
+                                0,1998136186
+                        )
+                ),
+                new ArrayList<>(
+                        Arrays.asList(
+                                1998136186,426756
+                        )
+                )
+        );
+        assertEquals(true, swap);
+    }
+
+    @Test
+    void getHugeColorsToSwap() {
+        var swap = codeWorker.getSwappableColors(
+                1,
+                new ArrayList<>(
+                        Arrays.asList(
+                                0,1998136186
+                        )
+                ),
+                new ArrayList<>(
+                        Arrays.asList(
+                                1998136186,426756
+                        )
+                )
+        );
+        List<List<Integer>> swappable = new ArrayList<>(
+                Arrays.asList(
+                        new ArrayList<>(
+                                Arrays.asList(
+                                        1998136186,0
+                                )
+                        )
+                )
+        );
+        assertEquals(swappable, swap);
+    }
+
+    @Test
     void reduce2HugeColorsDone() {
         List<List<Integer>> list = new ArrayList<>(
                 Arrays.asList(
@@ -151,12 +196,12 @@ class MainTest {
                 Arrays.asList(
                         new ArrayList<>(
                                 Arrays.asList(
-                                        999336263,998799923
+                                        1998136186,0
                                 )
                         ),
                         new ArrayList<>(
                                 Arrays.asList(
-                                        998799923,999763019
+                                        0,1998562942
                                 )
                         )
                 )
@@ -303,12 +348,12 @@ class MainTest {
                 Arrays.asList(
                         new ArrayList<>(
                                 Arrays.asList(
-                                        0,3,0
+                                        3,0,0
                                 )
                         ),
                         new ArrayList<>(
                                 Arrays.asList(
-                                        3,0,0
+                                        0,3,0
                                 )
                         ),
                         new ArrayList<>(

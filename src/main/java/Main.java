@@ -112,6 +112,8 @@ class CodeWorker {
                 var colorFrom1stBox = box1.get(i);
                 if (colorFrom1stBox != 0) {
                     colorsToSwap.add(new ArrayList<>(Arrays.asList(colorFrom2ndBox, i)));
+                } else if (box1.get(color).equals(colorFrom2ndBox) && box2.get(color) != 0) {
+                    colorsToSwap.add(new ArrayList<>(Arrays.asList(colorFrom2ndBox, i)));
                 }
             }
         }
