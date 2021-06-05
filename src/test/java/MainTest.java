@@ -58,6 +58,39 @@ class MainTest {
     }
 
     @Test
+    void is1ColorPossible() {
+        List<List<Integer>> list = new ArrayList<>(
+                Arrays.asList(
+                        new ArrayList<>(
+                                Arrays.asList(
+                                        123412340
+                                )
+                        )
+                )
+        );
+        assertEquals("Possible", codeWorker.testIfPossible(list));
+    }
+
+    @Test
+    void is2HugeColorPossible() {
+        List<List<Integer>> list = new ArrayList<>(
+                Arrays.asList(
+                        new ArrayList<>(
+                                Arrays.asList(
+                                        999336263,998799923
+                                )
+                        ),
+                        new ArrayList<>(
+                                Arrays.asList(
+                                        998799923,999763019
+                                )
+                        )
+                )
+        );
+        assertEquals("Possible", codeWorker.testIfPossible(list));
+    }
+
+    @Test
     void noProperReductuionOn2Colors() {
         List<List<Integer>> list = new ArrayList<>(
                 Arrays.asList(
@@ -95,6 +128,40 @@ class MainTest {
         );
 
         assertEquals(true, codeWorker.isCorrectlyReduced(list));
+    }
+
+    @Test
+    void reduce2HugeColorsDone() {
+        List<List<Integer>> list = new ArrayList<>(
+                Arrays.asList(
+                        new ArrayList<>(
+                                Arrays.asList(
+                                        999336263,998799923
+                                )
+                        ),
+                        new ArrayList<>(
+                                Arrays.asList(
+                                        998799923,999763019
+                                )
+                        )
+                )
+        );
+
+        List<List<Integer>> expected = new ArrayList<>(
+                Arrays.asList(
+                        new ArrayList<>(
+                                Arrays.asList(
+                                        999336263,998799923
+                                )
+                        ),
+                        new ArrayList<>(
+                                Arrays.asList(
+                                        998799923,999763019
+                                )
+                        )
+                )
+        );
+        assertEquals(expected, codeWorker.reduceBoxes(list));
     }
 
     @Test
