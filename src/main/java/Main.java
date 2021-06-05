@@ -1,3 +1,4 @@
+import java.math.BigInteger;
 import java.util.*;
 
 public class Main {
@@ -8,10 +9,8 @@ public class Main {
 
 }
 
+// NEED TO REWORK EVERYTHING TO WORK WITH BIG INTEGERS, otherwise we are running in to substraction
 class CodeWorker {
-    public String testMethod() {
-        return "method";
-    }
 
     public String testIfPossible(List<List<Integer>> boxes) {
         var possible = "Possible";
@@ -114,6 +113,7 @@ class CodeWorker {
                     colorsToSwap.add(new ArrayList<>(Arrays.asList(colorFrom2ndBox, i)));
                 } else if (box1.get(color).equals(colorFrom2ndBox) && box2.get(color) != 0) {
                     colorsToSwap.add(new ArrayList<>(Arrays.asList(colorFrom2ndBox, i)));
+                    break;
                 }
             }
         }
