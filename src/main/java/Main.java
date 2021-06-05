@@ -18,9 +18,26 @@ class CodeWorker {
         var impossible = "Impossible";
 
         var reducedBoxes = this.reduceBoxes(boxes);
-        // check if they are really all zeroed out
+        if (this.isCorrectlyReduced(reducedBoxes)) {
+            return possible;
+        } else {
+            return impossible;
+        }
+    }
 
-        return possible;
+    public boolean isCorrectlyReduced (List<List<Integer>> boxes) {
+        for (var i = 0; i < boxes.size() ; i ++) {
+            var colorPosition = i;
+            var colorCounter = 0;
+            for (var j = 0; j < boxes.size() ; j ++) {
+                var boxPosition = j;
+                colorCounter += boxes.get(boxPosition).get(colorPosition) > 0 ? 1 : 0;
+                if (colorCounter > 1) {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
     public List<List<Integer>> reduceBoxes(List<List<Integer>> boxes) {

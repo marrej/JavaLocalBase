@@ -58,6 +58,46 @@ class MainTest {
     }
 
     @Test
+    void noProperReductuionOn2Colors() {
+        List<List<Integer>> list = new ArrayList<>(
+                Arrays.asList(
+                        new ArrayList<>(
+                                Arrays.asList(
+                                        0,2
+                                )
+                        ),
+                        new ArrayList<>(
+                                Arrays.asList(
+                                        1,1
+                                )
+                        )
+                )
+        );
+
+        assertEquals(false, codeWorker.isCorrectlyReduced(list));
+    }
+
+    @Test
+    void properReductuionOn2Colors() {
+        List<List<Integer>> list = new ArrayList<>(
+                Arrays.asList(
+                        new ArrayList<>(
+                                Arrays.asList(
+                                        0,2
+                                )
+                        ),
+                        new ArrayList<>(
+                                Arrays.asList(
+                                        2,0
+                                )
+                        )
+                )
+        );
+
+        assertEquals(true, codeWorker.isCorrectlyReduced(list));
+    }
+
+    @Test
     void reduce2ColorsDone() {
         List<List<Integer>> boxes = new ArrayList<>(
                 Arrays.asList(
