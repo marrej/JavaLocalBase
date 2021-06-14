@@ -22,7 +22,7 @@ class MainTest {
     @Test
     void getMapAndSetFromInput() {
         List<Integer> input = new ArrayList<>(Arrays.asList(1,2,3,3,5,6));
-        Set<Integer> outSet = new HashSet<>(new int[]{1,2,3,5,6});
+        Set<Integer> outSet = new HashSet<>(new ArrayList<>(Arrays.asList(1,2,3,5,6)));
         Map<Integer, Integer> outMap = new HashMap<>();
         outMap.put(1,1);
         outMap.put(2,1);
@@ -30,19 +30,33 @@ class MainTest {
         outMap.put(5,1);
         outMap.put(6,1);
         MapSet output = new MapSet(outMap, outSet);
-        assertEquals(output, codeWorker.getMapSet(input));
+        assertEquals(true, output.equals(codeWorker.getMapSet(input)));
     }
 
     @Test
-    void getDiffSum() {
+    void getDiffSum4() {
         List<Integer> input = new ArrayList<>(Arrays.asList(1,2,3,3,5,6));
         int diff = 1;
         assertEquals(4, codeWorker.getDiffSum(input, diff));
     }
 
     @Test
+    void getDiffSum10() {
+        List<Integer> input = new ArrayList<>(Arrays.asList(1,2,2,2,3,3,5,6));
+        int diff = 1;
+        assertEquals(10, codeWorker.getDiffSum(input, diff));
+    }
+
+    @Test
+    void getDiffSum5() {
+        List<Integer> input = new ArrayList<>(Arrays.asList(1,2,2,2,3,3,5,6));
+        int diff = 3;
+        assertEquals(5, codeWorker.getDiffSum(input, diff));
+    }
+
+    @Test
     void getDiff1For3() {
-        Set<Integer> outSet = new HashSet<>(new int[]{1,2,3,5,6});
+        Set<Integer> outSet = new HashSet<>(new ArrayList<>(Arrays.asList(1,2,3,5,6)));
         Map<Integer, Integer> outMap = new HashMap<>();
         outMap.put(1,1);
         outMap.put(2,1);
@@ -57,7 +71,7 @@ class MainTest {
 
     @Test
     void getDiff2For3() {
-        Set<Integer> outSet = new HashSet<>(new int[]{1,2,3,5,6});
+        Set<Integer> outSet = new HashSet<>(new ArrayList<>(Arrays.asList(1,2,3,5,6)));
         Map<Integer, Integer> outMap = new HashMap<>();
         outMap.put(1,1);
         outMap.put(2,1);
@@ -67,6 +81,21 @@ class MainTest {
         MapSet mapSet = new MapSet(outMap, outSet);
         int difference = 2;
         int findFor = 3;
-        assertEquals(1, codeWorker.getDiff(mapSet, difference, findFor));
+        assertEquals(2, codeWorker.getDiff(mapSet, difference, findFor));
+    }
+
+    @Test
+    void getDiff6For2() {
+        Set<Integer> outSet = new HashSet<>(new ArrayList<>(Arrays.asList(1,2,3,5,6)));
+        Map<Integer, Integer> outMap = new HashMap<>();
+        outMap.put(1,1);
+        outMap.put(2,3);
+        outMap.put(3,2);
+        outMap.put(5,1);
+        outMap.put(6,1);
+        MapSet mapSet = new MapSet(outMap, outSet);
+        int difference = 1;
+        int findFor = 2;
+        assertEquals(6, codeWorker.getDiff(mapSet, difference, findFor));
     }
 }
