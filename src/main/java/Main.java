@@ -11,11 +11,7 @@ public class Main {
 class CodeWorker {
 
     public Integer getPalindromeAmounts(String input) {
-        var modulo = 1;
-        for (var i=0;i<9;i++) {
-            modulo *= 10;
-        }
-        modulo += 7;
+        var modulo = 1000000007;
 
         var letters = input.split("");
         var sum = 0;
@@ -28,7 +24,15 @@ class CodeWorker {
             if (letterPositions.get(letter) == null) {
                 letterPositions.put(letter, new ArrayList<>(Arrays.asList(i)));
             } else {
-                sum += this.getClosedInbetween(letter, letterPositions, closedPositions, closedPositionAmounts);
+
+                var addition = (this.getClosedInbetween(letter, letterPositions, closedPositions, closedPositionAmounts) % modulo);;
+                var newSum = sum+addition;
+                if (newSum < 0) {
+                    var deductable = sum - modulo;
+                    sum = addition + deductable;
+                } else {
+                    sum = newSum;
+                }
                 this.closePosition(letter,i, letterPositions, closedPositions, closedPositionAmounts);
 
 
