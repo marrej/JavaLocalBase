@@ -15,13 +15,13 @@ class MainTest {
     }
 
     @Test
-    void testMethod() {
-        assertEquals(codeWorker.testMethod(), "method");
+    void getAmountOfPalindromes1() {
+        assertEquals(4, codeWorker.getPalindromeAmounts("abbaab"));
     }
 
     @Test
-    void getAmounOfPalindromes() {
-        assertEquals(5, codeWorker.getPalindromeAmounts("abbaab"));
+    void getAmountOfPalindromes2() {
+        assertEquals(7, codeWorker.getPalindromeAmounts("ababaab"));
     }
 
     @Test

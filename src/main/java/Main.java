@@ -9,11 +9,14 @@ public class Main {
 }
 
 class CodeWorker {
-    public String testMethod() {
-        return "method";
-    }
 
     public Integer getPalindromeAmounts(String input) {
+        var modulo = 1;
+        for (var i=0;i<9;i++) {
+            modulo *= 10;
+        }
+        modulo += 7;
+
         var letters = input.split("");
         var sum = 0;
 
@@ -33,19 +36,21 @@ class CodeWorker {
             }
         }
 
-        return sum;
+        return sum % modulo;
     }
 
     public Integer getClosedInbetween(String letter, Map<String, List<Integer>> letterPositions, SortedSet<Integer> closedPositions, Map<Integer, Integer> closedPositionAmounts) {
         var letterPosition = letterPositions.get(letter);
-        var firstPosition = letterPosition.get(0);
-        var closedPosition = closedPositions.headSet(firstPosition - 1);
+        var sum = 0;
 
-        for (var position: closedPosition) {
-
+        for (var i = 0; i < letterPosition.size(); i ++) {
+            var closedPosition = closedPositions.headSet(letterPosition.get(i));
+            if (closedPosition.size() == 0) {break;}
+            for (var cPosition: closedPosition) {
+                sum += closedPositionAmounts.get(cPosition);
+            }
         }
-
-        return 0;
+        return sum;
     }
 
     public void closePosition(String letter, Integer pos, Map<String, List<Integer>> letterPositions, SortedSet<Integer> closedPositions, Map<Integer, Integer> closedPositionAmounts) {
