@@ -16,6 +16,41 @@ class CodeWorker {
         return this.doDepthSearch(m,n,startColumn,startRow,maxMove);
     }
 
+    public int findPaths2(int m, int n, int maxMove, int startRow, int startColumn) {
+        if (maxMove == 0) {
+            return 0;
+        }
+        // +2 to have the boundary padding
+        var currentTable = new int[m+2][n+2];
+        var pastTable = new int[m+2][n+2];
+        for (var i = 1; i<=m; i++) {
+            pastTable[i][1] += 1;
+            pastTable[i][n] += 1;
+        }
+
+        // this is the table for the distance 1
+        for (var i = 1; i<=n; i++) {
+            pastTable[1][i] += 1;
+            pastTable[m][i] += 1;
+        }
+        var answer = pastTable[startRow+1][startColumn+1];
+
+        for (var i = 1; i < maxMove; i++) {
+            for (var j = 1; j<=m; j++) {
+                for (var q = 1; q<=n; q++) {
+                    currentTable[j][q] = this.addAndModularize(this.addAndModularize(this.addAndModularize(pastTable[j-1][q], pastTable[j+1][q]), pastTable[j][q - 1]), pastTable[j][q+1]);
+                }
+            }
+            answer = this.addAndModularize(answer, currentTable[startRow+1][startColumn+1]);
+            pastTable = currentTable;
+            // can not forget to clear the current table -> because we are passing refferences around
+            currentTable = new int[m+2][n+2];
+        }
+
+
+        return answer;
+    }
+
     public Integer doDepthSearch(Integer height, Integer width, Integer x, Integer y, Integer maxMove) {
         var sum = 0;
 

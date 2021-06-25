@@ -32,4 +32,10 @@ class MainTest {
         // 8 sec & 36 - 806 ms
         assertEquals(102984580, codeWorker.findPaths(8,7,16,1,5));
     }
+
+    @Test
+    void getTheMoveSet32() {
+        // 8 sec & 36 - 806 ms
+        assertEquals(102984580, codeWorker.findPaths2(8,7,16,1,5));
+    }
 }
