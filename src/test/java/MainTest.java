@@ -16,4 +16,28 @@ class MainTest {
     void testMethod() {
         assertEquals(codeWorker.testMethod(), "method");
     }
+
+    @Test
+    void reduceToNone() {
+        assertEquals("", codeWorker.removeDuplicates("abcddcba"));
+    }
+
+    @Test
+    void reduceToSome2() {
+        assertEquals("ac", codeWorker.removeDuplicates("abbc"));
+    }
+    @Test
+    void reduceToSome3() {
+        assertEquals("ac", codeWorker.removeDuplicates("acoo"));
+    }
+
+    @Test
+    void reduceToSome4() {
+        assertEquals("bc", codeWorker.removeDuplicates("aabcoo"));
+    }
+
+    @Test
+    void reduceToSome() {
+        assertEquals("abk", codeWorker.removeDuplicates("abcddcoppok"));
+    }
 }
