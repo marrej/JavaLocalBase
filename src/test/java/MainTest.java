@@ -12,8 +12,9 @@ class MainTest {
         codeWorker = new CodeWorker();
     }
 
+
     @Test
     void testMethod() {
-        assertEquals(codeWorker.testMethod(), "method");
+        assertEquals(0, codeWorker.runSolution());
     }
 }
