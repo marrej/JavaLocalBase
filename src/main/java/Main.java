@@ -1,46 +1,31 @@
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
+import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) throws IOException {
         CodeWorker code = new CodeWorker();
-        code.fileInputReadStream();
-        System.out.println(code.testMethod());
     }
 
 
 }
 
-class CodeWorker {
-    public void fileInputReadStream() throws IOException {
-        FileInputStream in = null;
-        FileOutputStream out = null;
-
-        try {
-            in = new FileInputStream("src/input.txt");
-            out = new FileOutputStream("output.txt");
-
-            int c;
-            while ((c = in.read()) != -1) {
-                out.write(c);
-            }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            if (in != null) {
-                in.close();
-            }
-            if (out != null) {
-                out.close();
-            }
+// has to add public for google
+class Solution {
+    public static void main(String[] args) {
+        Scanner in = new Scanner(new BufferedReader(new InputStreamReader(System.in)));
+        int t = in.nextInt(); // Scanner has functions to read ints, longs, strings, chars, etc.
+        for (int i = 1; i <= t; ++i) {
+            int n = in.nextInt();
+            int m = in.nextInt();
+            String s = in.next();
+            var result = new CodeWorker().runSolution();
+            System.out.println("Case #" + i + ": " + (result) + " " + (result));
         }
     }
+}
 
-    public String testMethod() {
-        return "method";
+class CodeWorker {
+    public Integer runSolution() {
+        return 0;
     }
 }
