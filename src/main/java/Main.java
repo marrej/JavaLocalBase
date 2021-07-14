@@ -1,13 +1,11 @@
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
+import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) throws IOException {
         CodeWorker code = new CodeWorker();
         code.fileInputReadStream();
-        System.out.println(code.testMethod());
+        System.out.println("finished");
     }
 
 
@@ -15,16 +13,23 @@ public class Main {
 
 class CodeWorker {
     public void fileInputReadStream() throws IOException {
-        FileInputStream in = null;
+        Scanner in = null;
         FileOutputStream out = null;
 
         try {
-            in = new FileInputStream("src/input.txt");
+            in = new Scanner(new File("src/input.txt"));
             out = new FileOutputStream("output.txt");
 
-            int c;
-            while ((c = in.read()) != -1) {
-                out.write(c);
+            int amountOfCases = in.nextInt();
+            System.out.println(amountOfCases);
+            for (var i=0;i<amountOfCases;i++) {
+                System.out.println(i);
+                int amountOfNumbersInCase = in.nextInt();
+                String output = "no\n";
+                for (var j=0;j<amountOfNumbersInCase;j++) {
+                    int nextNumber = in.nextInt();
+                }
+                out.write(output.getBytes()); // convert to bytes to be able to write
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
