@@ -1,4 +1,6 @@
 import java.io.*;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 public class Main {
@@ -21,14 +23,27 @@ class CodeWorker {
             out = new FileOutputStream("output.txt");
 
             int amountOfCases = in.nextInt();
-            System.out.println(amountOfCases);
             for (var i=0;i<amountOfCases;i++) {
-                System.out.println(i);
+                Map<Integer, Integer> prefixSums = new HashMap<>();
+
                 int amountOfNumbersInCase = in.nextInt();
-                String output = "no\n";
+                String yes = "yes\n";
+                String no = "no\n";
+                String output = no;
+                int finalSum = 0;
                 for (var j=0;j<amountOfNumbersInCase;j++) {
                     int nextNumber = in.nextInt();
+                    finalSum += nextNumber;
+                    var previousDifferencePrefixSum = prefixSums.get(finalSum);
+                    if (previousDifferencePrefixSum != null) {
+                        output = yes;
+                    } else {
+                        prefixSums.put(finalSum, 1);
+                    }
                 }
+                if (finalSum == 0 || output == yes) output = yes;
+                else output = no;
+
                 out.write(output.getBytes()); // convert to bytes to be able to write
             }
         } catch (FileNotFoundException e) {
