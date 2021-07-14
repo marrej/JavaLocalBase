@@ -21,31 +21,8 @@ class CodeWorker {
         try {
             in = new Scanner(new File("src/input.txt"));
             out = new FileOutputStream("output.txt");
-
-            int amountOfCases = in.nextInt();
-            for (var i=0;i<amountOfCases;i++) {
-                Map<Integer, Integer> prefixSums = new HashMap<>();
-
-                int amountOfNumbersInCase = in.nextInt();
-                String yes = "yes\n";
-                String no = "no\n";
-                String output = no;
-                int finalSum = 0;
-                for (var j=0;j<amountOfNumbersInCase;j++) {
-                    int nextNumber = in.nextInt();
-                    finalSum += nextNumber;
-                    var previousDifferencePrefixSum = prefixSums.get(finalSum);
-                    if (previousDifferencePrefixSum != null) {
-                        output = yes;
-                    } else {
-                        prefixSums.put(finalSum, 1);
-                    }
-                }
-                if (finalSum == 0 || output == yes) output = yes;
-                else output = no;
-
-                out.write(output.getBytes()); // convert to bytes to be able to write
-            }
+            var inputProcessor = new InputProcessor(in,out);
+            out = inputProcessor.processAllCases();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -59,8 +36,84 @@ class CodeWorker {
             }
         }
     }
+}
 
-    public String testMethod() {
-        return "method";
+class InputProcessor {
+    Scanner inputStream = null;
+    FileOutputStream outputStream = null;
+    Map<Integer, Integer> prefixSums;
+
+    public InputProcessor(Scanner inputStream, FileOutputStream outputStream) {
+        this.inputStream = inputStream;
+        this.outputStream = outputStream;
     }
+
+    public FileOutputStream processAllCases() throws IOException {
+        int amountOfCases = this.inputStream.nextInt();
+        for (var i=0;i<amountOfCases;i++) findAnswerForCaseAndStoreInOuput();
+        return this.outputStream;
+    }
+
+    private void findAnswerForCaseAndStoreInOuput() throws IOException {
+        initializeNewPrefixMap();
+        var answer = getAnswerForSequence();
+        storeAnswerInOutput(answer);
+    }
+
+    private Answer getAnswerForSequence() {
+        int amountOfNumbersInCase = this.inputStream.nextInt();
+        return hasPrefixSequence(amountOfNumbersInCase);
+    }
+
+    private void storeAnswerInOutput(Answer answer) throws IOException {
+        this.outputStream.write(answer.getBytes());
+    }
+
+    private Answer hasPrefixSequence(int amountOfNumbersInCase) {
+        var answer = new Answer();
+        answer.setNo();
+        int finalSum = 0;
+
+        for (var j = 0; j< amountOfNumbersInCase; j++) {
+            int nextNumber = this.inputStream.nextInt();
+            finalSum += nextNumber;
+            var differentialPrefix = prefixSums.get(finalSum);
+            if (hasAZeroSum(differentialPrefix)) answer.setYes();
+            else storeActualSumAsPrefix(finalSum);
+
+        }
+        return answer;
+    }
+
+    private boolean hasAZeroSum(Integer differentialPrefix) {
+        return differentialPrefix != null;
+    }
+
+    private Integer storeActualSumAsPrefix(int finalSum) {
+        return prefixSums.put(finalSum, 1);
+    }
+
+    private void initializeNewPrefixMap() {
+        prefixSums = new HashMap<>();
+    }
+
+
+}
+
+class Answer {
+    String yes = "yes\n";
+    String no = "no\n";
+    String finalAnswer = "";
+
+    public void setYes() {
+        finalAnswer = yes;
+    }
+
+    public void setNo() {
+        finalAnswer = no;
+    }
+
+    public byte[] getBytes() {
+        return finalAnswer.getBytes();
+    };
 }

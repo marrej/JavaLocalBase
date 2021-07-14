@@ -11,9 +11,4 @@ class MainTest {
     public void setUp() throws Exception{
         codeWorker = new CodeWorker();
     }
-
-    @Test
-    void testMethod() {
-        assertEquals(codeWorker.testMethod(), "method");
-    }
 }
