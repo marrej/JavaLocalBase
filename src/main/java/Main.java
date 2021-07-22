@@ -100,20 +100,39 @@ class InputProcessor {
     private void tryToBlockTheOtherPlayerFromWinning() {
         var breakOut = false;
         var allCoinsTakes = squareMemory.getAllSquaresForNumber(actualCoins);
+
         for (var i = allCoinsTakes.size() -1; i >=0; i-- ) {
             var possibleBestTake = allCoinsTakes.get(i);
             var actualRest = actualCoins - allCoinsTakes.get(i);
-            var restOfCoinsToTake = squareMemory.getAllSquaresForNumber(actualRest);
-            for (var j = restOfCoinsToTake.size() - 1; j >=0; j--) {
-                if (restOfCoinsToTake.get(j) > 0) {
-                    actualCoins -= possibleBestTake;
-                    breakOut = true;
-                    break;
-                }
+            var hasPotential = this.hasPotentialToWin(1, actualRest);
+            if (hasPotential) {
+                actualCoins -= possibleBestTake;
+                breakOut = true;
+                break;
             }
-            if (breakOut) break;
+        }
+        if (!breakOut) {
+            actualCoins -= allCoinsTakes.get(0);
         }
     }
+
+    private boolean hasPotentialToWin(Integer step, Integer remainingCoins) {
+        System.out.println(remainingCoins);
+        var allCoinsTakes = squareMemory.getAllSquaresForNumber(remainingCoins);
+        for (var j = allCoinsTakes.size() -1; j >=0; j-- ) {
+            var possibleBestTake = allCoinsTakes.get(j);
+            var actualRest = remainingCoins - possibleBestTake;
+            if (actualRest == 0) {
+                return step%2!=0 ? false : true;
+            }
+            if (actualRest > 0 &&  step%2!=0) {
+                return this.hasPotentialToWin(step+1, actualRest);
+            }
+        }
+        return step%2!=0 ? true : false;
+    }
+
+
 
     private void prepareSquaresForCoins(Integer coins) {
         squareMemory.fillAllSquaresUntilInput(coins);
