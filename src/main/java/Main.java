@@ -54,7 +54,7 @@ class InputProcessor {
             try {
                 amountOfCases = this.inputStream.nextInt();
                 System.out.println(amountOfCases);
-                this.outputStream.write();
+                this.outputStream.write("Pat\n".getBytes());
             } catch (Exception e) {
                 throw new Exception("End of Stream");
             }
