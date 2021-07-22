@@ -42,10 +42,12 @@ class CodeWorker {
 class InputProcessor {
     Scanner inputStream = null;
     FileOutputStream outputStream = null;
+    PlayerMove playerMove = null;
 
     public InputProcessor(Scanner inputStream, FileOutputStream outputStream) {
         this.inputStream = inputStream;
         this.outputStream = outputStream;
+        playerMove = new PlayerMove();
     }
 
     public FileOutputStream processAllCases() throws Exception {
@@ -54,7 +56,7 @@ class InputProcessor {
             try {
                 amountOfCases = this.inputStream.nextInt();
                 System.out.println(amountOfCases);
-                this.outputStream.write("Pat\n".getBytes());
+                this.outputStream.write(playerMove.getActualPlayer().getBytes());
             } catch (Exception e) {
                 throw new Exception("End of Stream");
             }
@@ -62,4 +64,21 @@ class InputProcessor {
         return this.outputStream;
     }
 
+}
+
+class PlayerMove {
+    final private String pat = "Pat\n";
+    final private String mat = "Mat\n";
+    private Integer playerCounter = 0;
+    public PlayerMove() {
+    }
+
+    public void nextPlayerMove() {
+        playerCounter++;
+    }
+
+    public String getActualPlayer() {
+        var isSecondPlayer = playerCounter%2 == 1;
+        return isSecondPlayer ? mat : pat;
+    }
 }
