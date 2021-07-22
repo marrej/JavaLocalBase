@@ -25,6 +25,9 @@ class CodeWorker {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
+        } catch (Exception e) {
+            // TODO: make prettier
+            System.err.println("End of stream");
         } finally {
             if (in != null) {
                 in.close();
@@ -45,10 +48,18 @@ class InputProcessor {
         this.outputStream = outputStream;
     }
 
-    public FileOutputStream processAllCases() throws IOException {
-        int amountOfCases = this.inputStream.nextInt();
-        System.out.println(amountOfCases)
-;        return this.outputStream;
+    public FileOutputStream processAllCases() throws Exception {
+        int amountOfCases = -1;
+        do {
+            try {
+                amountOfCases = this.inputStream.nextInt();
+                System.out.println(amountOfCases);
+                this.outputStream.write();
+            } catch (Exception e) {
+                throw new Exception("End of Stream");
+            }
+        } while (amountOfCases != -1);
+        return this.outputStream;
     }
 
 }
