@@ -63,9 +63,7 @@ class MainTest {
         );
 
         var updatedLayout = codeWorker.solveHanoiTowers(baselayout);
-
-        assertEquals(expectedLayout, updatedLayout);
-
+        assertEquals(this.testTowers(expectedLayout, updatedLayout), true);
     }
 
     @Test
@@ -95,9 +93,25 @@ class MainTest {
         );
 
         var updatedLayout = codeWorker.solveHanoiTowers(baselayout);
+        assertEquals(this.testTowers(expectedLayout, updatedLayout), true);
+    }
 
-        assertEquals(expectedLayout, updatedLayout);
+    public boolean testTowers(List<Deque<Integer>> a, List<Deque<Integer>> b) {
+        if (a.size() != b.size()) return false;
+        for (var i = 0; i < a.size(); i++) {
+            if(!this.testDeques(a.get(i), b.get(i))) return false;
+        }
+        return true;
+    }
 
+    public boolean testDeques(Deque<Integer> a, Deque<Integer> b) {
+        if (a.size() != b.size()) return false;
+        for (var i = 0; i < a.size(); i++ ) {
+            var elementFromA = a.pop();
+            var elementFromB = b.pop();
+            if (elementFromA != elementFromB) return false;
+        }
+        return true;
     }
 
 
@@ -128,8 +142,7 @@ class MainTest {
         );
 
         var updatedLayout = codeWorker.solveHanoiTowers(baselayout);
-
-        assertEquals(expectedLayout, updatedLayout);
+        assertEquals(this.testTowers(expectedLayout, updatedLayout), true);
 
     }
 
@@ -161,8 +174,6 @@ class MainTest {
         );
 
         var updatedLayout = codeWorker.solveHanoiTowers(baselayout);
-
-        assertEquals(expectedLayout, updatedLayout);
-
+        assertEquals(this.testTowers(expectedLayout, updatedLayout), true);
     }
 }
