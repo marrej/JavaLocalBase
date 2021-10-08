@@ -26,7 +26,7 @@ class MainTest {
     void baseTest() {
         List<Integer> inputs = new ArrayList<>(Arrays.asList(1,2,2,4));
         var calculatedResult = this.codeWorker.minimalAmountOfActions(inputs);
-        assertEquals(2, calculatedResult);
+        assertEquals(3, calculatedResult);
     }
 
     @Test

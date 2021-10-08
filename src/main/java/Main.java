@@ -38,12 +38,24 @@ class CodeWorker {
             } else {
                 var pairOfSmallestValuesWithGap = addGapToBiggerElement(pairOfSmallestValues, gapBetweenTraversedAndNonTraversedSet);
                 amountOfStepsTaken += getStepsToTakeForThis(pairOfSmallestValuesWithGap);
-                lastValueUsed = Optional.ofNullable(pairOfSmallestValuesWithGap.get(1));
-                gapBetweenTraversedAndNonTraversedSet += pairOfSmallestValuesWithGap.get(1) - pairOfSmallestValuesWithGap.get(0);
+                lastValueUsed =  getLastValueUsed(pairOfSmallestValuesWithGap);
+                gapBetweenTraversedAndNonTraversedSet += getGapFromThePair(pairOfSmallestValuesWithGap);
                 cleanupTheValueCountsWith(pairOfSmallestValues);
             }
         }
         return amountOfStepsTaken;
+    }
+
+    private Optional<Integer> getLastValueUsed(List<Integer> pairOfSmallestValuesWithGap) {
+        var biggerValueAfterRunning = pairOfSmallestValuesWithGap.get(1);
+        var biggerValueCount = Optional.ofNullable(valueCounts.get(biggerValueAfterRunning));
+        return Optional.ofNullable(biggerValueCount.filter((count) -> count > 1).map((count) -> biggerValueAfterRunning + count).orElse(biggerValueAfterRunning));
+    }
+
+    private int getGapFromThePair(List<Integer> pairOfSmallestValuesWithGap) {
+        var biggerCount = Optional.ofNullable(valueCounts.get(pairOfSmallestValuesWithGap.get(1)));
+        var baseGapBetweenPair = pairOfSmallestValuesWithGap.get(1) - pairOfSmallestValuesWithGap.get(0);
+        return biggerCount.map(count -> baseGapBetweenPair * count).orElse(baseGapBetweenPair);
     }
 
     private List<Integer> getPairOfSmallestValues(Optional<Integer> lastValueUsed, Integer gapBetweenTraversedAndNonTraversedSet) {
@@ -74,7 +86,7 @@ class CodeWorker {
         removeValueFromAllDataStructures(smallestValue);
 
         var biggerValue = pairOfSmallestValues.get(1);
-        removeBiggerValueOnlyIfItWereOccuringOnce(biggerValue);
+        removeValueFromAllDataStructures(biggerValue);
     }
 
     private void removeBiggerValueOnlyIfItWereOccuringOnce(Integer biggerValue) {
@@ -102,7 +114,17 @@ class CodeWorker {
                 gapToFillWithGivenChoices = remainderAfterRemovingChoice;
             }
         }
+        Integer stepsForBiggerNumberCount = increaseGapByCountOfTheValue(pairOfSmallestValues, stepsToTakeForThisGap);
+        if (stepsForBiggerNumberCount != null) return stepsForBiggerNumberCount;
         return stepsToTakeForThisGap;
+    }
+
+    private Integer increaseGapByCountOfTheValue(List<Integer> pairOfSmallestValues, int stepsToTakeForThisGap) {
+        var biggerNumberOccurence = Optional.ofNullable(valueCounts.get(pairOfSmallestValues.get(1)));
+        if (biggerNumberOccurence.isPresent()) {
+            return biggerNumberOccurence.get()* stepsToTakeForThisGap;
+        }
+        return null;
     }
 
     private void initializeUniqueValueCountsFor(List<Integer> startValues) {
