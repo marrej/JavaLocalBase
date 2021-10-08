@@ -55,6 +55,19 @@ class MainTest {
     }
 
     @Test
+    void stepsForPair() {
+        assertEquals(1, codeWorker.getStepsToTakeForThis(Arrays.asList(0,1)));
+        assertEquals(1, codeWorker.getStepsToTakeForThis(Arrays.asList(0,2)));
+        assertEquals(1, codeWorker.getStepsToTakeForThis(Arrays.asList(0,5)));
+        assertEquals(2, codeWorker.getStepsToTakeForThis(Arrays.asList(0,10)));
+        assertEquals(2, codeWorker.getStepsToTakeForThis(Arrays.asList(0,3)));
+        assertEquals(2, codeWorker.getStepsToTakeForThis(Arrays.asList(0,6)));
+        assertEquals(2, codeWorker.getStepsToTakeForThis(Arrays.asList(0,7)));
+        assertEquals(8, codeWorker.getStepsToTakeForThis(Arrays.asList(0,33)));
+        assertEquals(2367, codeWorker.getStepsToTakeForThis(Arrays.asList(200,12031)));
+    }
+
+    @Test
     void largeTest() {
         List<Integer> inputs = Arrays.asList(53,361,188,665,786,898,447,562,272,123,229,629,670,848,994,54,822,46,208,17,449,302,466,832,931,778,156,39,31,777,749,436,138,289,453,276,539,901,839,811,24,420,440,46,269,786,101,443,832,661,460,281,964,278,465,247,408,622,638,440,751,739,876,889,380,330,517,919,583,356,83,959,129,875,5,750,662,106,193,494,120,653,128,84,283,593,683,44,567,321,484,318,412,712,559,792,394,77,711,977,785,146,936,914,22,942,664,36,400,857);
         assertEquals(10605, this.codeWorker.minimalAmountOfActions(inputs));
