@@ -23,8 +23,6 @@ class CodeWorker {
 
     private Integer getSimplisticMinimalSteps(List<Integer> startValues) {
         var sortedValues = startValues.stream().sorted(Integer::compareTo).collect(Collectors.toList());
-        System.out.println(sortedValues);
-
         Optional<Integer> lastValue = Optional.ofNullable(null);
         var gap = 0;
         var amountOfSteps = 0;

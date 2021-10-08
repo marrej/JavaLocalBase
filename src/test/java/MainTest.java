@@ -67,21 +67,27 @@ class MainTest {
     }
 
     @Test
-    void lastValueUsed() {
-        var baseBiggerValue =17;
-        var baseGap = 22;
-        Map<Integer, Integer> map = new HashMap<>();
-        map.put(baseBiggerValue,3);
-
-        codeWorker.retrieveGaplessValueCount = (value) -> map.get(value- baseGap) ;
-
-        assertEquals(87,codeWorker.getLastValueUsed(Arrays.asList(15, baseBiggerValue+baseGap)).get());
-    }
-
-    @Test
     void smallTestSet() {
         List<Integer> inputs = Arrays.asList(5,17,22,24,31,36);
         assertEquals(25, codeWorker.minimalAmountOfActions(inputs));
+    }
+
+    @Test
+    void smallTestSet2() {
+        List<Integer> inputs = Arrays.asList(1,5,5);
+        assertEquals(3, codeWorker.minimalAmountOfActions(inputs));
+    }
+
+    @Test
+    void smallTestSet3() {
+        List<Integer> inputs = Arrays.asList(1,5,5,5,5);
+        assertEquals(3, codeWorker.minimalAmountOfActions(inputs));
+    }
+
+    @Test
+    void smallTestSet3() {
+        List<Integer> inputs = Arrays.asList(1,16,16,16);
+        assertEquals(3, codeWorker.minimalAmountOfActions(inputs));
     }
 
     @Test
