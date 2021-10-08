@@ -40,10 +40,10 @@ class CodeWorker {
                 retrieveGaplessValueCount = getGaplessRetrievalFunction(gapBetweenTraversedAndNonTraversedSet);
 
                 var pairOfSmallestValuesWithGap = addGapToBiggerElement(pairOfSmallestValues, gapBetweenTraversedAndNonTraversedSet);
-//                var smallerValue = pairOfSmallestValues.get(0); // used just for debugging
-//                var biggerValue = pairOfSmallestValues.get(1);
-//                var valueCount =valueCounts.get(biggerValue);
-//                var updatedBigger = pairOfSmallestValuesWithGap.get(1);
+                var smallerValue = pairOfSmallestValues.get(0); // used just for debugging
+                var biggerValue = pairOfSmallestValues.get(1);
+                var valueCount =valueCounts.get(biggerValue);
+                var updatedBigger = pairOfSmallestValuesWithGap.get(1);
                 Integer stepsForThePairWithRepeatingElement = getStepsForPair(pairOfSmallestValuesWithGap);
                 amountOfStepsTaken += stepsForThePairWithRepeatingElement;
                 lastValueUsed = getLastValueUsed(pairOfSmallestValuesWithGap);
