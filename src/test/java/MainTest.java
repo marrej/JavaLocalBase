@@ -81,7 +81,7 @@ class MainTest {
     @Test
     void smallTestSet() {
         List<Integer> inputs = Arrays.asList(5,17,22,24,31,36);
-        assertEquals(27, codeWorker.minimalAmountOfActions(inputs));
+        assertEquals(25, codeWorker.minimalAmountOfActions(inputs));
     }
 
     @Test
