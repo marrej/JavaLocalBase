@@ -2,8 +2,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.*;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -26,7 +25,7 @@ class MainTest {
     void baseTest() {
         List<Integer> inputs = new ArrayList<>(Arrays.asList(1,2,2,4));
         var calculatedResult = this.codeWorker.minimalAmountOfActions(inputs);
-        assertEquals(3, calculatedResult);
+        assertEquals(4, calculatedResult);
     }
 
     @Test
@@ -65,6 +64,18 @@ class MainTest {
         assertEquals(2, codeWorker.getStepsToTakeForThis(Arrays.asList(0,7)));
         assertEquals(8, codeWorker.getStepsToTakeForThis(Arrays.asList(0,33)));
         assertEquals(2367, codeWorker.getStepsToTakeForThis(Arrays.asList(200,12031)));
+    }
+
+    @Test
+    void lastValueUsed() {
+        var baseBiggerValue =17;
+        var baseGap = 22;
+        Map<Integer, Integer> map = new HashMap<>();
+        map.put(baseBiggerValue,3);
+
+        codeWorker.retrieveGaplessValueCount = (value) -> map.get(value- baseGap) ;
+
+        assertEquals(87,codeWorker.getLastValueUsed(Arrays.asList(15, baseBiggerValue+baseGap)).get());
     }
 
     @Test

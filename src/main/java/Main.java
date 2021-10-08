@@ -46,7 +46,7 @@ class CodeWorker {
 //                var updatedBigger = pairOfSmallestValuesWithGap.get(1);
                 Integer stepsForThePairWithRepeatingElement = getStepsForPair(pairOfSmallestValuesWithGap);
                 amountOfStepsTaken += stepsForThePairWithRepeatingElement;
-                lastValueUsed =  getLastValueUsed(pairOfSmallestValuesWithGap);
+                lastValueUsed = getLastValueUsed(pairOfSmallestValuesWithGap);
                 gapBetweenTraversedAndNonTraversedSet += getGapFromThePair(pairOfSmallestValuesWithGap); // this gap might not be correct, try for [2,15,15,15,20]
                 cleanupTheValueCountsWith(pairOfSmallestValues);
             }
@@ -56,7 +56,8 @@ class CodeWorker {
 
     private Integer getStepsForPair(List<Integer> pairOfSmallestValuesWithGap) {
         var initialStepsForPair = getStepsToTakeForThis(pairOfSmallestValuesWithGap);
-        Integer stepsForThePairWithRepeatingElement = Optional.ofNullable(increaseGapByCountOfTheValue(pairOfSmallestValuesWithGap.get(1), initialStepsForPair)).orElse(initialStepsForPair);
+        Integer stepsForThePairWithRepeatingElement = Optional.ofNullable(increaseGapByCountOfTheValue(pairOfSmallestValuesWithGap.get(1), initialStepsForPair))
+                .orElse(initialStepsForPair);
         return stepsForThePairWithRepeatingElement;
     }
 
@@ -67,12 +68,12 @@ class CodeWorker {
         return retrieveValueWithoutGap;
     }
 
-    private Optional<Integer> getLastValueUsed(List<Integer> pairOfSmallestValuesWithGap) {
-        var biggerValueAfterRunning = pairOfSmallestValuesWithGap.get(1);
+    public Optional<Integer> getLastValueUsed(List<Integer> pairOfSmallestValuesWithGap) {
         var smallerValue = pairOfSmallestValuesWithGap.get(0);
+        var biggerValueAfterRunning = pairOfSmallestValuesWithGap.get(1);
+        var baseGapBetweenPair = biggerValueAfterRunning - smallerValue;
         var biggerValueCount = Optional.ofNullable(retrieveGaplessValueCount.apply(biggerValueAfterRunning));
-        var baseGapBetweenPair = pairOfSmallestValuesWithGap.get(1) - pairOfSmallestValuesWithGap.get(0);
-        return Optional.ofNullable(biggerValueCount.filter((count) -> count > 1).map((count) -> smallerValue + baseGapBetweenPair * count).orElse(biggerValueAfterRunning));
+        return Optional.ofNullable(biggerValueCount.map((count) -> smallerValue + baseGapBetweenPair * count).orElse(biggerValueAfterRunning));
     }
 
     private int getGapFromThePair(List<Integer> pairOfSmallestValuesWithGap) {
@@ -113,7 +114,7 @@ class CodeWorker {
     }
 
     private void removeValueFromAllDataStructures(Integer biggerValue) {
-        valueCounts.remove(biggerValue);
+//        valueCounts.remove(biggerValue);
         uniqueValues.remove(biggerValue);
     }
 
@@ -134,11 +135,10 @@ class CodeWorker {
     }
 
     private Integer increaseGapByCountOfTheValue(Integer value, int stepsToTakeForThisGap) {
-        var biggerNumberOccurence = Optional.ofNullable(retrieveGaplessValueCount.apply(value));
-        if (biggerNumberOccurence.isPresent()) {
-            return biggerNumberOccurence.get()* stepsToTakeForThisGap;
-        }
-        return null;
+        var biggerNumberCount = Optional.ofNullable(retrieveGaplessValueCount.apply(value))
+                .map(count -> count * stepsToTakeForThisGap)
+                .orElse(stepsToTakeForThisGap);
+        return biggerNumberCount;
     }
 
     private void initializeUniqueValueCountsFor(List<Integer> startValues) {
