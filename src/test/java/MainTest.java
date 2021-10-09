@@ -25,7 +25,7 @@ class MainTest {
     void baseTest() {
         List<Integer> inputs = new ArrayList<>(Arrays.asList(1,2,2,4));
         var calculatedResult = this.codeWorker.minimalAmountOfActions(inputs);
-        assertEquals(4, calculatedResult);
+        assertEquals(3, calculatedResult);
     }
 
     @Test
@@ -37,20 +37,14 @@ class MainTest {
 
     @Test
     void pushingForwardTest() {
-        List<Integer> inputs = Arrays.asList(2,15,15,15);
-        assertEquals(12, this.codeWorker.minimalAmountOfActions(inputs));
+        List<Integer> inputs = Arrays.asList(2,2,2,2,5,5,5,5);
+        assertEquals(8, this.codeWorker.minimalAmountOfActions(inputs));
     }
 
     @Test
     void pushingForwardTest2() {
         List<Integer> inputs = Arrays.asList(2,15,15,15,4,4,4); // [2,4] 1*3, [8,21] 4*3
-        assertEquals(15, this.codeWorker.minimalAmountOfActions(inputs));
-    }
-
-    @Test
-    void pushingForwardTest3() {
-        List<Integer> inputs = Arrays.asList(1,23,23,40,40,101,101,200,200); // [1,23] 5*4 + 2 => 5 * 2, [23+ (23-1) = 45, 40 + (23 -1)*2 = 84] 7*5 + 2*2 = 9 * 2, [123,223]
-        assertEquals(150, this.codeWorker.minimalAmountOfActions(inputs));
+        assertEquals(12, this.codeWorker.minimalAmountOfActions(inputs));
     }
 
     @Test
@@ -79,16 +73,11 @@ class MainTest {
     }
 
     @Test
-    void smallTestSet3() {
-        List<Integer> inputs = Arrays.asList(1,5,5,5,5);
-        assertEquals(3, codeWorker.minimalAmountOfActions(inputs));
+    void smallTestSet4() {
+        List<Integer> inputs = Arrays.asList(1,5,5,5,5,5);
+        assertEquals(6, codeWorker.minimalAmountOfActions(inputs));
     }
 
-    @Test
-    void smallTestSet3() {
-        List<Integer> inputs = Arrays.asList(1,16,16,16);
-        assertEquals(3, codeWorker.minimalAmountOfActions(inputs));
-    }
 
     @Test
     void largeTest() {
