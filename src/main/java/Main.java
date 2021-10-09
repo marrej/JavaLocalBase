@@ -27,6 +27,7 @@ class CodeWorker {
         var gap = 0;
         var amountOfSteps = 0;
         var amountOfValuesToTheLeft = 0;
+        var skipTill = 0;
 
         Optional<Integer> lastValueNaive = Optional.ofNullable(null);
         var gapNaive = 0;
@@ -41,46 +42,47 @@ class CodeWorker {
                 lastValueNaive = Optional.ofNullable(value);
                 amountOfValuesToTheLeft++;
             } else {
-                int amountOfValuesToTheRight = getValueRepetition(sortedValues, i, value);
-                i = i+amountOfValuesToTheRight-1;
-
                 var smallerValue = lastValue.get();
                 var shiftedUpperValue = (value+gap);
+                if (i > skipTill) {
+                    int amountOfValuesToTheRight = getValueRepetition(sortedValues, i, value);
+                    skipTill = i+amountOfValuesToTheRight-1;
 
-                var gapBetweenValues = shiftedUpperValue - smallerValue;
 
-                Optional<Integer> finalStepsForThisPair = Optional.ofNullable(null);
-                var additionalValueForTheOverflow = 0;
+                    var gapBetweenValues = shiftedUpperValue - smallerValue;
 
-                for (var q=0;q<=5;q++) {
-                    var upperBound = gapBetweenValues+q;
-                    var leftSideSteps =getStepsToTakeForThis(Arrays.asList(0,upperBound));
-                    var rightSideSteps = getStepsToTakeForThis(Arrays.asList(0,q));
+                    Optional<Integer> finalStepsForThisPair = Optional.ofNullable(null);
+                    var additionalValueForTheOverflow = 0;
 
-                    var actualJoinedValueSteps = ( leftSideSteps * amountOfValuesToTheRight ) + (rightSideSteps * amountOfValuesToTheLeft);
+                    for (var q=0;q<=5;q++) {
+                        var upperBound = gapBetweenValues+q;
+                        var leftSideSteps =getStepsToTakeForThis(Arrays.asList(0,upperBound));
+                        var rightSideSteps = getStepsToTakeForThis(Arrays.asList(0,q));
 
-                    if (finalStepsForThisPair.isEmpty()) {
-                        finalStepsForThisPair = Optional.ofNullable(actualJoinedValueSteps);
-                    } else {
-                        var finalSteps = finalStepsForThisPair.get();
-                        if (finalSteps > actualJoinedValueSteps) {
+                        var actualJoinedValueSteps = ( leftSideSteps * amountOfValuesToTheRight ) + (rightSideSteps * amountOfValuesToTheLeft);
+
+                        if (finalStepsForThisPair.isEmpty()) {
                             finalStepsForThisPair = Optional.ofNullable(actualJoinedValueSteps);
-                            additionalValueForTheOverflow = q;
+                        } else {
+                            var finalSteps = finalStepsForThisPair.get();
+                            if (finalSteps > actualJoinedValueSteps) {
+                                finalStepsForThisPair = Optional.ofNullable(actualJoinedValueSteps);
+                                additionalValueForTheOverflow = q;
+                            }
                         }
+
                     }
 
+                    amountOfSteps += finalStepsForThisPair.get();
+                    var actualGapForPair = amountOfValuesToTheRight * (gapBetweenValues + additionalValueForTheOverflow) + amountOfValuesToTheLeft * additionalValueForTheOverflow;
+                    gap += actualGapForPair;
+
+                    var additionalGapForLastValue = amountOfValuesToTheRight > 1 ? actualGapForPair : 0;
+                    lastValue = Optional.ofNullable(shiftedUpperValue + additionalGapForLastValue); // this is the problem the shift does not work correctly
+                    amountOfValuesToTheLeft+= amountOfValuesToTheRight;
+                    System.out.println("NonNaive");
+                    System.out.println("Value:  " + value + " LastValue " + lastValue.get() + " gap: " + gap + " added gap: " + actualGapForPair + " ammountOfSteps: " + amountOfSteps);
                 }
-
-                amountOfSteps += finalStepsForThisPair.get();
-                var actualGapForPair = amountOfValuesToTheRight * gapBetweenValues + amountOfValuesToTheLeft * additionalValueForTheOverflow;
-                gap += actualGapForPair;
-
-                var additionalGapForLastValue = amountOfValuesToTheRight > 1 ? actualGapForPair : 0;
-                lastValue = Optional.ofNullable(shiftedUpperValue + additionalGapForLastValue);
-                amountOfValuesToTheLeft+= amountOfValuesToTheRight;
-                System.out.println("NonNaive");
-                System.out.println("Value:  " + value + " LastValue " + lastValue.get() + " gap: " + gap + " ammountOfSteps: " + amountOfSteps);
-
                 // naive implementation
                 smallerValue = lastValueNaive.get();
                 shiftedUpperValue = value + gapNaive;
@@ -90,7 +92,7 @@ class CodeWorker {
                 amountOfStepsNaive += stepsForThisDistance;
                 lastValueNaive = Optional.ofNullable(shiftedUpperValue);
                 System.out.println("Naive");
-                System.out.println("Value:  " + value + " LastValue " + lastValueNaive.get() + " gap: " + gapNaive + " ammountOfSteps: " + amountOfStepsNaive);
+                System.out.println("Value:  " + value +" LastValue " + lastValueNaive.get() + " gap: " + gapNaive + " added gap: " + distanceSmallerToBigger + " ammountOfSteps: " + amountOfStepsNaive);
             }
         }
 
