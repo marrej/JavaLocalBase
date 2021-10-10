@@ -25,7 +25,7 @@ class MainTest {
     void baseTest() {
         List<Integer> inputs = new ArrayList<>(Arrays.asList(1,2,2,4));
         var calculatedResult = this.codeWorker.minimalAmountOfActions(inputs);
-        assertEquals(3, calculatedResult);
+        assertEquals(4, calculatedResult);
     }
 
     @Test
@@ -44,7 +44,7 @@ class MainTest {
     @Test
     void pushingForwardTest2() {
         List<Integer> inputs = Arrays.asList(2,15,15,15,4,4,4); // [2,4] 1*3, [8,21] 4*3
-        assertEquals(12, this.codeWorker.minimalAmountOfActions(inputs));
+        assertEquals(15, this.codeWorker.minimalAmountOfActions(inputs));
     }
 
     @Test

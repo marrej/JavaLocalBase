@@ -77,7 +77,8 @@ class CodeWorker {
                     var actualGapForPair = amountOfValuesToTheRight * (gapBetweenValues + additionalValueForTheOverflow) + amountOfValuesToTheLeft * additionalValueForTheOverflow;
                     gap += actualGapForPair;
 
-                    var additionalGapForLastValue = amountOfValuesToTheRight > 1 ? actualGapForPair : 0;
+                    var additionalGapForLastValue = (amountOfValuesToTheRight - 1) * (gapBetweenValues + additionalValueForTheOverflow) + (amountOfValuesToTheLeft) * additionalValueForTheOverflow;
+
                     lastValue = Optional.ofNullable(shiftedUpperValue + additionalGapForLastValue); // this is the problem the shift does not work correctly
                     amountOfValuesToTheLeft+= amountOfValuesToTheRight;
                     System.out.println("NonNaive");
