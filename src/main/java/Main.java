@@ -42,6 +42,12 @@ class CodeWorker {
                 lastValueNaive = Optional.ofNullable(value);
                 amountOfValuesToTheLeft++;
             } else {
+                if (i > skipTill && amountOfSteps > amountOfStepsNaive) {
+                    amountOfSteps = amountOfStepsNaive;
+                    lastValue = lastValueNaive;
+                    gap = gapNaive;
+                }
+
                 var smallerValue = lastValue.get();
                 var shiftedUpperValue = (value+gap);
                 if (i > skipTill) {
@@ -81,10 +87,10 @@ class CodeWorker {
 
                     lastValue = Optional.ofNullable(shiftedUpperValue + additionalGapForLastValue); // this is the problem the shift does not work correctly
                     amountOfValuesToTheLeft+= amountOfValuesToTheRight;
-                    System.out.println("NonNaive");
-                    System.out.println("Value:  " + value + " LastValue " + lastValue.get() + " gap: " + gap + " added gap: " + actualGapForPair + " ammountOfSteps: " + amountOfSteps);
+//                    System.out.println("NonNaive");
+//                    System.out.println("Value:  " + value + " LastValue " + lastValue.get() + " gap: " + gap + " added gap: " + actualGapForPair + " ammountOfSteps: " + amountOfSteps);
                 }
-                // naive implementation
+//                // naive implementation
                 smallerValue = lastValueNaive.get();
                 shiftedUpperValue = value + gapNaive;
                 var distanceSmallerToBigger = shiftedUpperValue - smallerValue;
@@ -92,8 +98,8 @@ class CodeWorker {
                 gapNaive += distanceSmallerToBigger;
                 amountOfStepsNaive += stepsForThisDistance;
                 lastValueNaive = Optional.ofNullable(shiftedUpperValue);
-                System.out.println("Naive");
-                System.out.println("Value:  " + value +" LastValue " + lastValueNaive.get() + " gap: " + gapNaive + " added gap: " + distanceSmallerToBigger + " ammountOfSteps: " + amountOfStepsNaive);
+//                System.out.println("Naive");
+//                System.out.println("Value:  " + value +" LastValue " + lastValueNaive.get() + " gap: " + gapNaive + " added gap: " + distanceSmallerToBigger + " ammountOfSteps: " + amountOfStepsNaive);
             }
         }
 
