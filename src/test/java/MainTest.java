@@ -41,6 +41,6 @@ class MainTest {
         List<String> bounds = Arrays.asList("8:00","18:00");
         String meetingLength = "0:45";
 
-        assertEquals(Arrays.asList("8:00-8:45","9:30-10:15","16:20-17:20","17:15-18:00"),codeWorker.getPossibleScheduleTimes(schedules, bounds, meetingLength));
+        assertEquals(Arrays.asList("8:00-8:45","9:30-10:15","16:20-17:10","17:15-18:00"),codeWorker.getPossibleScheduleTimes(schedules, bounds, meetingLength));
     }
 }

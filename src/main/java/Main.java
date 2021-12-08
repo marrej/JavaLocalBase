@@ -13,7 +13,6 @@ class CodeWorker {
     private Integer startTime;
     private Integer endTime;
     private Integer meetingMinutes;
-    private Integer schedule2Pointer = 0;
 
     public String testMethod() {
         return "method";
@@ -78,26 +77,40 @@ class CodeWorker {
             }
         }
 
+        var schedule2Pointer= 0;
         for (var free1: schedule1Free) {
-            for (var free2: schedule2Free) {
+            for (var i=schedule2Pointer; i < schedule2Free.size(); i++) {
+                var free2 = schedule2Free.get(i);
                 var isFree2WraparoundFree1 = free1.startTime >= free2.startTime && free1.endTime <= free2.endTime;
                 var isFree2InnerBlockOfFree1 = free1.startTime <= free2.startTime && free1.endTime >= free2.endTime;
                 var isFree2AtStartOfFree1 = free1.startTime >= free2.startTime && free2.endTime <= free1.endTime;
                 var isFree2AtTheEndOfFree1 = free1.startTime <= free2.startTime && free2.endTime >= free1.endTime;
+
                 if (isFree2WraparoundFree1) {
                     complementaryTimeBlocks.add(free1.toTimeString());
+                    schedule2Pointer = i;
                 } else if (isFree2InnerBlockOfFree1) {
                     if ((free2.endTime - free2.startTime) >=meetingMinutes) {
                         complementaryTimeBlocks.add(free2.toTimeString());
+                    } else {
+                        schedule2Pointer = i;
                     }
                 } else if (isFree2AtStartOfFree1) {
                     if ((free2.endTime - free1.startTime) >= meetingMinutes) {
                         complementaryTimeBlocks.add(new TimeRange(free1.startTime, free2.endTime).toTimeString());
+                    } else {
+                        schedule2Pointer = i;
                     }
                 } else if (isFree2AtTheEndOfFree1) {
                     if ((free1.endTime - free2.startTime) >= meetingMinutes) {
                         complementaryTimeBlocks.add(new TimeRange(free2.startTime, free1.endTime).toTimeString());
+                    } else {
+                        schedule2Pointer = i;
+                        break;
                     }
+                } else {
+                    schedule2Pointer = i;
+                    break;
                 }
             }
         }
