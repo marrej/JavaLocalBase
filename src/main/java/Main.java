@@ -13,5 +13,9 @@ class CodeWorker {
     public String testMethod() {
         return "method";
     }
+
+    public Integer doKosaraju(List<List<Integer>> edges, List<Integer> nodes) {
+        return 0;
+    }
 }
 
