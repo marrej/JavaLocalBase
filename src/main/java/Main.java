@@ -161,3 +161,111 @@ class SkillTransformer {
 }
 
 
+class Solver2 {
+
+    private SkillTransformer translator;
+
+    public Solver2() {
+        this.translator = new SkillTransformer();
+    }
+
+
+    public int[] solve(String[] req_skills, List<List<String>> people) {
+        this.skillToNumberTranscibe(req_skills);
+        List<Person> persons = this.retrievePeople(people);
+        int[] sufficientPeople = this.findSufficientPeople(persons, req_skills.length);
+        return sufficientPeople;
+    }
+
+    private int[] findSufficientPeople(List<Person> people, Integer skillNumber) {
+        List<Person> sufficientPeople = new ArrayList<>();
+        Set<Integer> obtainedSkills = new HashSet<>();
+
+        for (var skillId = 0; skillId < skillNumber; skillId++) {
+            if (!obtainedSkills.contains(skillId)) {
+
+
+                var viablePersons = new ArrayList<Person>();
+                for (var person: people) {
+                    if(person.skills.contains(skillId)) {
+                        var updatedPersonSkillSet = new HashSet<>(person.skills);
+                        if (obtainedSkills.size() <= updatedPersonSkillSet.size()) {
+                            for (var obtainedSkill: obtainedSkills) {
+                                if (person.skills.contains(obtainedSkill)){
+                                    updatedPersonSkillSet.remove(obtainedSkill);
+                                }
+                            }
+                        } else {
+                            for (var personSkill: person.skills) {
+                                if (obtainedSkills.contains(personSkill)){
+                                    updatedPersonSkillSet.remove(personSkill);
+                                }
+                            }
+                        }
+                        if (updatedPersonSkillSet.size() == 0)  {
+                            people.remove(person);
+                        } else {
+                            person.skills = updatedPersonSkillSet;
+                            viablePersons.add(person);
+                        }
+                    }
+                }
+
+                Person personToUse = null;
+                var maxPersonSkills = 0;
+                for (var person: viablePersons) {
+                    var hasMoreSkills = person.skills.size() >= maxPersonSkills;
+                    if (hasMoreSkills) {
+                        maxPersonSkills = person.skills.size();
+                        personToUse = person;
+                    }
+                }
+
+                for (var skill: personToUse.skills) {
+                    obtainedSkills.add(skill);
+                }
+                sufficientPeople.add(personToUse);
+                people.remove(personToUse);
+            }
+        }
+        return sufficientPeople.stream().mapToInt(p -> p.id).toArray();
+    }
+
+    private List<Person> retrievePeople(List<List<String>> people) {
+        var personIdCounter = 0;
+        List<Person> allPeople = new ArrayList<>();
+        for (var person: people) {
+            List<Integer> skills= new ArrayList<>();
+            for (var skill: person) {
+                skills.add(this.translator.getSkillId(skill));
+            }
+            allPeople.add(new Person(personIdCounter, skills));
+            personIdCounter++;
+        }
+        return allPeople;
+    }
+
+
+    private void skillToNumberTranscibe(String[] skills) {
+        for (var skill: skills) {
+            this.translator.addSkill(skill);
+        }
+    }
+
+
+}
+
+class Person {
+    public Integer id;
+    public Set<Integer> skills;
+
+    public Person(Integer id, List<Integer> skills) {
+        this.id = id;
+        this.skills = new TreeSet<>(skills);
+    }
+
+    public String toString() {
+        return this.id + " " + this.skills;
+    }
+}
+
