@@ -18,4 +18,10 @@ class MainTest {
     void testMethod() {
         assertEquals(codeWorker.testMethod(), "method");
     }
+
+    @Test
+    void smallestSufficientTeam() {
+        var optimilizedPeople = codeWorker.smallestSufficientTeam(new String[]{"java","nodejs","reactjs"}, Arrays.asList(Arrays.asList("java"),Arrays.asList("nodejs"),Arrays.asList("nodejs","reactjs")));
+        assertArrayEquals(new int[]{0,2},optimilizedPeople);
+    }
 }
